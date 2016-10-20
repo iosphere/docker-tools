@@ -16,6 +16,9 @@ else
     echo "setting up environment for '$MACHINE_NAME':"
     eval $(docker-machine env --shell bash $MACHINE_NAME)
 
+    # fix ssh key permissions
+    chown 600 "/root/.docker/machine/machines/${MACHINE_NAME}/id_rsa"
+
     # Show info
     docker info
 fi
