@@ -1,4 +1,4 @@
-FROM debian:8.6
+FROM debian:8.7
 
 # Install packages
 RUN apt-get update \
@@ -6,9 +6,9 @@ RUN apt-get update \
     && pip install awscli
 
 
-ENV VERSION_DOCKER_CLI 1.12.6
-ENV VERSION_DOCKER_COMPOSE 1.9.0
-ENV VERSION_DOCKER_MACHINE v0.8.2
+ENV VERSION_DOCKER_CLI 1.13.0
+ENV VERSION_DOCKER_COMPOSE 1.10.0
+ENV VERSION_DOCKER_MACHINE v0.9.0
 ENV VERSION_DOCKER_MACHINE_SCALEWAY 1.3
 
 # the mountpoint, where docker-machine should store it's config files
@@ -21,7 +21,7 @@ RUN curl -L https://github.com/docker/compose/releases/download/${VERSION_DOCKER
     && chmod +x /usr/local/bin/docker-compose
 
 # # docker-client
-RUN curl -L https://experimental.docker.com/builds/Linux/x86_64/docker-${VERSION_DOCKER_CLI}.tgz > /tmp/outdocker.tgz \
+RUN curl -L https://get.docker.com/builds/Linux/x86_64/docker-${VERSION_DOCKER_CLI}.tgz > /tmp/outdocker.tgz \
     && tar xvzfO /tmp/outdocker.tgz docker/docker > /usr/local/bin/docker \
     && chmod +x /usr/local/bin/docker && rm -rf /tmp/outdocker.tgz
 
