@@ -1,16 +1,15 @@
 #!/bin/bash
 
 # Show versions
-echo "tools:"
-docker --version
-docker-machine --version
-docker-compose --version
-echo ""
+# echo "tools:"
+# docker --version
+# docker-machine --version
+# docker-compose --version
+# echo ""
 
 if [ -z ${MACHINE_NAME+x} ]
 then
-    echo '$MACHINE_MACHINE is unset. Cannot use `docker-compose` or `docker`'
-
+    echo -n ""
 else
     # Configure Docker endpoint
     echo "setting up environment for '$MACHINE_NAME':"
