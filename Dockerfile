@@ -49,6 +49,9 @@ RUN curl -L https://releases.hashicorp.com/terraform/${VERSION_TERRAFORM}/terraf
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${VERSION_KUBELET}/bin/linux/amd64/kubelet > /usr/local/bin/kubelet \
     && chmod +x /usr/local/bin/kubelet
 
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${VERSION_KUBELET}/bin/linux/amd64/kubectl > /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl
+
 COPY .docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["/bin/bash", "--login"]
