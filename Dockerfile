@@ -6,13 +6,15 @@ RUN apt-get update \
     && pip install awscli
 
 
-ENV VERSION_DOCKER_CLI 1.13.0
-ENV VERSION_DOCKER_COMPOSE 1.10.1
-ENV VERSION_DOCKER_MACHINE v0.9.0
+ENV VERSION_DOCKER_CLI 1.13.1
+ENV VERSION_DOCKER_COMPOSE 1.11.2
+ENV VERSION_DOCKER_MACHINE v0.10.0
 ENV VERSION_DOCKER_MACHINE_SCALEWAY 1.3
 
-ENV VERSION_TERRAFORM 0.8.5
-ENV VERSION_TERRAGRUNT v0.9.8
+ENV VERSION_KUBELET v1.5.3
+
+ENV VERSION_TERRAFORM 0.8.8
+ENV VERSION_TERRAGRUNT v0.11.0
 
 # the mountpoint, where docker-machine should store it's config files
 ENV MACHINE_STORAGE_PATH /root/.docker/machine
@@ -42,6 +44,10 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/${VERSI
 # terraform
 RUN curl -L https://releases.hashicorp.com/terraform/${VERSION_TERRAFORM}/terraform_${VERSION_TERRAFORM}_linux_amd64.zip > /tmp/terraform.zip \
     && cd /tmp && ls && unzip terraform.zip && mv terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && rm -rf /tmp/terraform*
+
+# kubelet
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${VERSION_KUBELET}/bin/linux/amd64/kubelet > /usr/local/bin/kubelet \
+    && chmod +x /usr/local/bin/kubelet
 
 COPY .docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
