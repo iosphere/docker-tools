@@ -11,6 +11,7 @@ ENV VERSION_DOCKER_COMPOSE 1.11.2
 ENV VERSION_DOCKER_MACHINE v0.10.0
 ENV VERSION_DOCKER_MACHINE_SCALEWAY 1.3
 
+ENV VERSION_HELM v2.2.2
 ENV VERSION_KUBELET v1.5.3
 
 ENV VERSION_TERRAFORM 0.8.8
@@ -45,12 +46,18 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/${VERSI
 RUN curl -L https://releases.hashicorp.com/terraform/${VERSION_TERRAFORM}/terraform_${VERSION_TERRAFORM}_linux_amd64.zip > /tmp/terraform.zip \
     && cd /tmp && ls && unzip terraform.zip && mv terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && rm -rf /tmp/terraform*
 
+# Helm
+RUN curl -L https://storage.googleapis.com/kubernetes-helm/helm-${VERSION_HELM}-linux-amd64.tar.gz > /tmp/helm.tar.gz \
+    && cd /tmp && tar xvzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && rm -rf /tmp/linux-amd64 && rm -rf /tmp/helm.tar.gz
+
 # kubelet
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${VERSION_KUBELET}/bin/linux/amd64/kubelet > /usr/local/bin/kubelet \
     && chmod +x /usr/local/bin/kubelet
 
+# kubectl
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${VERSION_KUBELET}/bin/linux/amd64/kubectl > /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl
+
 
 COPY .docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
