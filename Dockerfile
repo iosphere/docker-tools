@@ -2,7 +2,7 @@ FROM debian:8.7
 
 # Install packages
 RUN apt-get update \
-    && apt-get -y install curl bash openssl python-pip openssh-client unzip vim \
+    && apt-get -y install curl bash git openssl python-pip openssh-client unzip vim \
     && pip install awscli
 
 
